@@ -25,7 +25,14 @@ function enterState(newState) {
     throw 'Invalid state transition attempted - from ' + currentState + ' to ' + newState;
   }
 }
-//Room Template.................................................
+//......................................................................Player Object
+let playerObj = {
+  'name': '',
+  'location': '',
+  'inventory': ''
+}
+
+//.......................................................................Room Template
 class Room {
   constructor(desc, inv, locked) {
     this.desc = desc
@@ -39,39 +46,76 @@ let insideTwo = new Room('', [], true)
 let insideThree = new Room('', [], true)
 let insideFour = new Room('', [], true)
 let insideFive = new Room('', [], true)
-//..............................................................
+//............................................................................Response
 let yesResponse = ['Y', 'Yes', 'YES', 'yes', 'y']
 let noResponse = ['N', 'No', 'NO', 'no', 'n']
-//let theResponse = ""
-//..............................................................
+let response = ""
+//....................................................................................
 
 start();
-
+//.....................................................................Welcome Message
 async function start() {
-//player1.name = null;
-//player1.name = userName;
-  let response = await ask("\nI want to play a game. It's similar to the game you play.  Would you like to continue Y or N?\n\n>_")
-
-  if (noResponse.includes(response)) {
-    console.log("Goodbyes")
-    process.exit()
-    //playerName = null;
-    //plyerName = userName;
-  } else if (yesResponse.includes(response)) {
-    let userName = await ask("\nWhat is your name player?\n\n>_")
-
-    //let response = await ask("\nMost people are so ungrateful to be alive but not you" + playerName)
- } else {
-   console.log("Peace Out")
-   process.exit()
- }
- //.............................................................
-let getResponseMainSt = thePrompt => {
-  let theResponse = "";
-
- if (thePrompt === "read sign\n\n") {
-   theResponse = "The sign says 'Welcome to Burlington Code Academy! Come on up to the third floor. If the door is locked, use the code12345'";
- } else if (thePrompt === "take sign") {
-   theResponse = "The door is locked. There is a keypad on the door handle. \n"
- } return theResponse;
-}};
+  console.log("\nMost people are so ungrateful to be alive but not you." +
+    "182 Main St. You are standing on Main Street between Church and South Winooski." +
+    "There is a door here. A keypad sits on the handle.  On the door is a handwritten sign.\n")
+  while (response !== 'exit') {
+    response = await ask('>_')
+    if (noResponse.includes(response)) {
+      console.log("Goodbyes")
+      process.exit()
+    } else if (yesResponse.includes(response)) {
+      //.......................................................Outside 182 Main Street
+    } else if (response === "read sign") {
+      response = console.log('The sign says "Welcome to Burlington Code Academy!\n' +
+        ' Come on up to the third floor.' +
+        ' If the door is locked, use the code 12345."');
+    } else if (response === "take sign") {
+      response = console.log('That would be selfish. How will other students find their way?\n');
+    } else if (response === "open door") {
+      response = console.log("The door is locked. There is a keypad on the door handle.\n")
+    } else if (response === "enter code 54321") {
+      response = console.log("You are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, Trident Gum, and an old Seven Days).\n")
+      //.......................................................................Foyer
+    } else if (response === "take items") {
+      response = console.log("You grab the items and add them to your inventory.\n")
+    } else if (response === "go up stairs") {
+      response = console.log("You walk up the stairs and enter a hallway with five doors numbered 1 through 5\n")
+      //......................................................................Room One
+    } else if (response === "enter door 1") {
+      response = console.log("A strange individial is sitting at a desk mumbling about a missing Seven Days")
+    } else if (response === "give seven days") {
+      response = console.log('The strange man looks into your eyes, flips you a coin and says "Keep the change you filthy animal"')
+    } else if (response === "exit room") {
+      response = console.log("Your're back in the hallway stairing at a 3D photo")
+      //......................................................................Room Two
+    } else if (response === "enter door 2") {
+      response = console.log("")
+    } else if (response === "exit room") {
+      response = console.log("You're back in the hallway staring at the 3D photo again. A kid tugs your pants and says its a schooner." +
+        `You reply it's not a schooner...It's a Sailboat.  The little boy replies with "A schooner IS a sailboat stupid head!"`)
+      //....................................................................Room Three
+    } else if (response === "enter door 3") {
+      response = console.log(`Door is locked. Where are the keys?`)
+    } else if (response === "use keys") {
+      response = console.log(`Door unlocks, enter room`)
+    } else if (response === "enter room") {
+      response = console.log(``)
+    } else if (response === "exit room") {
+      response = console.log("You're in the hallway now")
+      //.....................................................................Room Four
+    } else if (response === "enter door 4") {
+      response = console.log("")
+    } else if (response === "exit room") {
+      response = console.log(`You're in the hallway now`)
+      //.....................................................................Room Five
+    } else if (response === "enter door 5") {
+      response = console.log("")
+    } else if (response === "exit room") {
+      response = console.log(`You're in the hallway now`)
+      //..........................................................................Exit   
+    } else {
+      console.log("Peace Out")
+      process.exit()
+    }
+  }
+}
