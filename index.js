@@ -6,37 +6,40 @@ function ask(questionText) {
     readlineInterface.question(questionText, resolve);
   });
 }
-
-// remember the StateMachine lecture
-// https://bootcamp.burlingtoncodeacademy.com/lessons/cs/state-machines
-//let states = {
-//  'roomOne': { canChangeTo: ['roomTwo'] },
-//  'roomTwo': { canChangeTo: ['roomThree'] },
-//  'roomThree': { canChangeTo: ['roomOne'] }
-//};
-//
-//let currentState = "green";
-//
-function enterState(newState) {
-  let validTransitions = states[currentState].canChangeTo;
-  if (validTransitions.includes(newState)) {
-    currentState = newState;
-  } else {
-    throw 'Invalid state transition attempted - from ' + currentState + ' to ' + newState;
-  }
-}
-//......................................................................Player Object
+//.......................................................................Player Object
 let playerObj = {
   'name': '',
   'location': 'Outside Main St.',
   'inventory': ''
 }
 //.......................................................................State Machine
-let states = {
-'grab items': { canChangeTo: ['go up stairs']}
-}
-
-let currentState = 'grab items';
+//let rooms = {
+//"kingsLanding": { canChangeTo: ["cherryGarcia", "jumanji", "officeSpace", "escapeRoom"]},
+//"cherryGarcia": { canChangeTo: ["officeSpace"]},
+//"jumanji": { canChangeTo: ["kingsLanding", "cherryGarcia", "officeSpace", "escapeRoom"]},
+//"officeSpace": { canChangeTo: ["kingsLanding", "cherryGarcia", "jumanji", "escapeRoom"]},
+//"escapeRoom": { canChangeTo: [""]}
+//}
+//
+//let roomLookup = {
+//  'kingsLanding': kingsLanding,
+//  'cherryGarcia': cherryGarcia,
+//  'jumanji': jumanji,
+//  'officeSpace': officeSpace,
+//  'escapeRoom': escapeRoom
+//}
+//
+//let currentState = 'kingsLanding'
+//let currentRoom = roomLookup[currentState]
+//
+//function enterRoom(newRoom) {
+//  let validTransitions = rooms[currentRoom].canChangeTo;
+//  if (validTransitions.includes(newRoom)) {
+//    currentRoom = newRoom;
+//  } else {
+//    throw 'Invalid room transition attempted - from ' + currentRoom + "to" +newRoom;
+//  }
+//}
 //.......................................................................Room Template
 class Room {
   constructor(desc, inv, locked) {
@@ -46,11 +49,12 @@ class Room {
   }
 }
 
-let insideOne = new Room('', [], true)
-let insideTwo = new Room('', [], true)
-let insideThree = new Room('', [], true)
-let insideFour = new Room('', [], true)
-let insideFive = new Room('', [], true)
+//let foyer = new Room('', [], true)
+//let kingsLanding = new Room('', [], true)
+//let cherryGarcia = new Room('', [], true)
+//let jumanji = new Room('', [], true)
+//let officeSpace = new Room('', [], true)
+//let escapeRoom = new Room('', [], true)
 //............................................................................Response
 let yesResponse = ['Y', 'Yes', 'YES', 'yes', 'y']
 let noResponse = ['N', 'No', 'NO', 'no', 'n']
@@ -60,90 +64,91 @@ let response = ""
 start();
 //.....................................................................Welcome Message
 async function start() {
-  console.log("\nMost people are so ungrateful to be alive but not you." +
-    "\nYou are standing outside 182 Main Street between Church and South Winooski." +
-    "\nThere is a door here. A keypad sits on the handle.  On the door is a handwritten sign.\n")
+  playerObj.name = await ask("\nWhat is your name peasant?\n\n")
+  console.log(playerObj.name.toUpperCase() + ", Most people are so ungrateful to be alive but not you." +
+    "You are standing outside 182 Main Street between Church and South Winooski." +
+    "There is a door here. A keypad sits on the handle.  On the door is a handwritten sign.")
   while (response !== 'exit') {
-    response = await ask('>_')
+    response = await ask('\n>_')
     if (noResponse.includes(response)) {
       console.log("Goodbye")
       process.exit()
     } else if (yesResponse.includes(response)) {
       //.......................................................Outside 182 Main Street
     } else if (response.toLowerCase() === "read sign") {
-      response = console.log('\nThe sign says "Welcome to Burlington Code Academy!\n' +
-        'Come on up to the third floor.\n' +
-        'If the door is locked, use the code 12345."\n');
+      response = console.log('\nThe sign says "Welcome to Burlington Code Academy!' +
+        'Come on up to the third floor.' +
+        'If the door is locked, use the code 12345."');
     } else if (response === "take sign") {
-      response = console.log('That would be selfish. How will other students find their way?');
+      response = console.log('\nThat would be selfish. How will other students find their way?');
     } else if (response === "open door") {
-      response = console.log("The door is locked. There is a keypad on the door handle.\n")
+      response = console.log("\nThe door is locked. There is a keypad on the door handle.")
     } else if (response === "enter code 12345") {
       playerObj.location = 'In the Foyer'
-      response = console.log("You are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, Trident Gum, and an old Seven Days).\n")
-      console.log(playerObj) //check
-      //.......................................................................Foyer
+      response = console.log("\nYou are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, Trident Gum, and an old Seven Days).\n")
+      console.log(playerObj)
+      //check
+      //.......................................................................Foyer.....Room One
     } else if (response.toLowerCase() === "grab items") {
-      response = console.log("\nYou grab the items and add them to your inventory.\n")
+      response = console.log("\nYou grab the items and add them to your inventory.")
     } else if (response.toLowerCase() === "go up stairs") {
-      response = console.log("\nYou walk up the stairs and enter a hallway with five doors numbered 1 through 5\n")
-      
-      //..............................................................King's Landing
+      response = console.log("\nYou walk up the stairs and enter a hallway with five doors numbered 1 through 5")
+      //..............................................................King's Landing.....Room Two
     } else if (response.toLowerCase() === "enter door 1") {
-      response = console.log(`\nYou have entered the "King's Landing". A strange individial is sitting at a desk mumbling about a missing Seven Days\n`)
+      response = console.log(`\nYou have entered the "King's Landing". A strange individial is sitting at a desk mumbling about a missing Seven Days`)
     } else if (response.toLowerCase() === "give seven days") {
-      response = console.log('\nThe strange man looks into your eyes, flips you a coin and says "Keep the change you filthy animal"\n')
+      response = console.log('\nThe strange man looks into your eyes, flips you a coin and says "Keep the change you filthy animal"')
     } else if (response.toLowerCase() === "exit room") {
-      response = console.log("\nYour're back in the hallway stairing at a 3D photo\n")
-      //...............................................................Cherry Garcia
+      response = console.log("\nYour're back in the hallway stairing at a 3D photo")
+      //...............................................................Cherry Garcia.....Room Three
     } else if (response.toLowerCase() === "enter door 2") {
-      response = console.log(`\nThere is a freezer in the middle of the room, do you want to "put the ice cream in freezer"\n`)
+      response = console.log(`\nThere is a freezer in the middle of the room, do you want to "put the ice cream in freezer"`)
     } else if (response.toLowerCase() === "put the ice cream in the freezer") {
-      response = console.log(`\nYour Strawberry Cheese Cake ice cream will be safe in here, go to room 4 to get a spoon\n`)
+      response = console.log(`\nYour Strawberry Cheese Cake ice cream will be safe in here, go to room 5 to get a spoon`)
     } else if (response.toLowerCase() === "exit room") {
       response = console.log("\nYou're back in the hallway staring at the 3D photo again. A kid tugs your pants and says its a schooner." +
-        `You reply it's not a schooner...It's a Sailboat.  The little boy replies with "A schooner IS a sailboat stupid head!"\n`)
-      //.....................................................................Jumanji
+        `You reply it's not a schooner...It's a Sailboat.  The little boy replies with "A schooner IS a sailboat stupid head!"`)
+      //.....................................................................Jumanji.....Room Four
     } else if (response.toLowerCase() === "enter door 3") {
-      response = console.log(`\nDoor is locked. Where are the keys?\n`)
+      response = console.log(`\nDoor is locked. Where are the keys?`)
     } else if (response.toLowerCase() === "use keys") {
-      response = console.log(`\nDoor unlocks, enter room\n`)
+      response = console.log(`\nDoor unlocks, enter room`)
     } else if (response.toLowerCase() === "enter room") {
-      response = console.log(`\nA lion roars and you immediately close the door\n`)
+      response = console.log(`\nA lion roars and you immediately close the door`)
     } else if (response.toLowerCase() === "exit room") {
-      response = console.log("\nYou're in the hallway now\n")
-      //................................................................Office Space
+      response = console.log("\nYou're in the hallway now")
+      //................................................................Office Space.....Room Five
     } else if (response.toLowerCase() === "enter door 4") {
-      response = console.log(`\nWelcome to the kitchen.\nLet me give you a tour.` + 
-      `\nHere we have a microwave, dishwasher, fridge, and some cupboards.` +
-      `\nFeel free to USE anything, but don't forget to clean up after yourself\n`)
+      response = console.log(`\nWelcome to the kitchen.Let me give you a tour.` + 
+      `Here we have a microwave, dishwasher, fridge, and some cupboards.` +
+      `Feel free to USE anything, but don't forget to clean up after yourself`)
     } else if (response.toLowerCase() === "use microwave") {
-      response = console.log(`\nClose the door it smells like someone nuked some fish in there.  The smell covers the whole room.\n`)
+      response = console.log(`\nClose the door it smells like someone nuked some fish in there.  The smell covers the whole room.`)
     } else if (response.toLowerCase() === "use dishwasher") {
-      response = console.log(`\nThe dishwasher is in use at the moment.  You don't want to ruin the cycle.  A clean dish is a good dish.\n`)
+      response = console.log(`\nThe dishwasher is in use at the moment.  You don't want to ruin the cycle.  A clean dish is a good dish.`)
     } else if (response.toLowerCase() === "open fridge") {
-      response = console.log(`\nThe fridge was recently cleaned and everything tossed.  No one takes there items home.\n`)
+      response = console.log(`\nThe fridge was recently cleaned and everything tossed.  No one takes there items home.`)
     } else if (response.toLowerCase() === "open cupboards") {
-      response = console.log(`\nYou have found the GOLDEN SPOON, do you have anything to "TRADE" for it.\n`)
+      response = console.log(`\nYou have found the GOLDEN SPOON, do you have anything to "TRADE" for it.`)
     } else if (response.toLowerCase() === "take GOLDEN SPOON") {
-      response = console.log(`\nThe GOLDEN SPOON has been added to your inventory\n`)
+      response = console.log(`\nThe GOLDEN SPOON has been added to your inventory`)
     } else if (response.toLowerCase() === "trade knife") {
-      response = console.log(`\nYou may now "TAKE" the GOLDEN SPOON\n`)
+      response = console.log(`\nYou may now "TAKE" the GOLDEN SPOON`)
     } else if (response.toLowerCase() === "exit room") {
-      response = console.log(`\nYou're in the hallway now\n`)
-      //.................................................................Escape Room
+      response = console.log(`\nYou're in the hallway now`)
+      //.................................................................Escape Room.....Room Six
     } else if (response.toLowerCase() === "enter door 5") {
-      response = console.log("\nIt's a room inside a room inside a room...if you want to exit I'll give you a hint.\n")
+      response = console.log("\nIt's a room inside a room inside a room...if you want to exit I'll give you a hint.")
     } else if (response.toLowerCase() === "hint") {
-      response = console.log(`\nReverse Text The Name of The Room You're In\n`)
+      response = console.log(`\nReverse Text The Name of The Room You're In`)
     } else if (response.toLowerCase() === "mooR epacsE") {
-      response = console.log(`\nYou're in the hallway now\n`)
-      //........................................................................Exit   
+      response = console.log(`\nYou're in the hallway now`)
+      //..........................................................................Exit   
     } else if (response.toLowerCase() === "end game") {
-      console.log("\nPeace Out\n")
+      console.log("\nPeace Out")
       process.exit()
     } else {
-      console.log(`\nI don't recognize that command\n`)
+      console.log(`\nI don't recognize that command`)
     }
   }
 }
