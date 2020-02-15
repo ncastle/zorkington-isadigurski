@@ -74,6 +74,7 @@ async function start() {
     if (noResponse.includes(response)) {
       console.log("Goodbye")
       process.exit()
+    //..........................................................EXIT STATEMENTS 
     //THIS BELOW IS FOR EXITING CHERRY GARCIA ROOM
     } else if (response.toLowerCase() === "exit room" && playerObj.location == 'cherry garcia room') {
       playerObj.location = 'Hallway'
@@ -97,8 +98,8 @@ async function start() {
         playerObj.location = 'In the Hallway'
         response = console.log(`\nYou're in the hallway now\n`)
         console.log(playerObj) //check
-    
-    } else if (yesResponse.includes(response)) {
+    //.................................................................................GAME STARTS HERE
+  
       //.......................................................Outside 182 Main Street
     } else if (response.toLowerCase() === "read sign") {
       response = console.log('\nThe sign says "Welcome to Burlington Code Academy!' +
@@ -139,7 +140,11 @@ async function start() {
       console.log(playerObj) //check
     } else if (response.toLowerCase() === "put the ice cream in the freezer") {
       response = console.log(`\nYour Strawberry Cheese Cake ice cream will be safe in here, go to room 4 to get a spoon\n`)
-    }  else if (response.toLowerCase() === "enter door 3") { 
+    
+    //............................................."exit room" ===> EXIT CHERRY GARCIA (SEE EXIT CODE AT TOP OF WHILE LOOP)
+    //.........................................YOU ARE BACK IN HALLWAY
+    
+    } else if (response.toLowerCase() === "enter door 3") { 
       //.....................................................................Jumanji 
       response = console.log(`\nDoor is locked. Where are the keys?\n`)
     } else if (response.toLowerCase() === "use keys") {
@@ -148,8 +153,9 @@ async function start() {
       playerObj.location = 'Jumanji'
       response = console.log(`\nA lion roars and you immediately close the door`)
       console.log(playerObj) //check
-    
-      //................................................................Office Space
+    //..............................................."exit room" ===> EXIT JUMANJI (SEE EXIT CODE AT TOP OF WHILE LOOP)
+    //............................................YOU ARE BACK IN HALLWAY
+      //................................................................Kitchen
     } else if (response.toLowerCase() === "enter door 4") {
       playerObj.location = 'Kitchen'
       response = console.log(`\nWelcome to the kitchen.\nLet me give you a tour.` + 
@@ -168,7 +174,9 @@ async function start() {
       response = console.log(`\nThe GOLDEN SPOON has been added to your inventory`)
     } else if (response.toLowerCase() === "trade knife") {
       response = console.log(`\nYou may now "TAKE" the GOLDEN SPOON`)
-    
+
+    //..............................................."exit room" ===> EXIT KITCHEN (SEE EXIT CODE AT TOP OF WHILE LOOP)
+    //.........................................YOU ARE BACK IN HALLWAY
       //.................................................................Escape Room
     } else if (response.toLowerCase() === "enter door 5") {
       playerObj.location = 'Escape Room'
@@ -176,6 +184,8 @@ async function start() {
       console.log(playerObj) //check
     } else if (response.toLowerCase() === "hint") {
       response = console.log(`\nReverse Text The Name of The Room You're In`)
+
+    //..............................................."exit room" ===> EXIT ESCAPE ROOM (SEE EXIT CODE AT TOP OF WHILE LOOP)
     
       //........................................................................Exit   
     } else if (response.toLowerCase() === "end game") {
@@ -190,6 +200,7 @@ async function start() {
 //Need to not be able to walk up stairs in Foyer until items are picked up
 //Need to put a True/False statement on door 3 to enter.  The door is locked but you are able to enter it.
 //Need to make every "exit room", specific to its room.  When you type in "exit room", it loops back and always states "You're back in the hallway staring at a 3D photo"
-//
+//Need to reorganize/rename a lot of things
+//Need to have an end?
 
 //sanitize inputs (door code)
