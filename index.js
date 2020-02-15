@@ -69,13 +69,14 @@ async function start() {
       response = console.log('\nThe sign says "Welcome to Burlington Code Academy!\n' +
         'Come on up to the third floor.\n' +
         'If the door is locked, use the code 12345."\n');
-    } else if (response.toLowerCase() === "take sign") {
-      response = console.log('\nThat would be selfish. How will other students find their way?\n');
-    } else if (response.toLowerCase() === "open door") {
-      response = console.log("\nThe door is locked. There is a keypad on the door handle.\n")
-    } else if (response.toLowerCase() === "enter code 12345") {
+    } else if (response === "take sign") {
+      response = console.log('That would be selfish. How will other students find their way?');
+    } else if (response === "open door") {
+      response = console.log("The door is locked. There is a keypad on the door handle.\n")
+    } else if (response === "enter code 12345") {
       playerObj.location = 'In the Foyer'
-      response = console.log("\nYou are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, Trident Gum, and an old Seven Days).\n")
+      response = console.log("You are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, Trident Gum, and an old Seven Days).\n")
+      console.log(playerObj)
       //.......................................................................Foyer
     } else if (response.toLowerCase() === "grab items") {
       response = console.log("\nYou grab the items and add them to your inventory.\n")
@@ -145,3 +146,5 @@ async function start() {
 //Need to put a True/False statement on door 3 to enter.  The door is locked but you are able to enter it.
 //Need to make every "exit room", specific to its room.  When you type in "exit room", it loops back and always states "You're back in the hallway staring at a 3D photo"
 //
+
+//sanitize inputs (door code)
