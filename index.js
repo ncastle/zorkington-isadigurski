@@ -73,9 +73,10 @@ async function start() {
       response = console.log('That would be selfish. How will other students find their way?');
     } else if (response === "open door") {
       response = console.log("The door is locked. There is a keypad on the door handle.\n")
-    } else if (response === "enter code 54321") {
+    } else if (response === "enter code 12345") {
       playerObj.location = 'In the Foyer'
       response = console.log("You are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, Trident Gum, and an old Seven Days).\n")
+      console.log(playerObj)
       //.......................................................................Foyer
     } else if (response === "take items") {
       response = console.log("You grab the items and add them to your inventory.\n")
@@ -128,3 +129,5 @@ async function start() {
     }
   }
 }
+
+//sanitize inputs (door code)
