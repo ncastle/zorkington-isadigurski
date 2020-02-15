@@ -76,12 +76,13 @@ async function start() {
     } else if (response === "enter code 12345") {
       playerObj.location = 'In the Foyer'
       response = console.log("You are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, Trident Gum, and an old Seven Days).\n")
-      console.log(playerObj)
+      console.log(playerObj) //check
       //.......................................................................Foyer
     } else if (response.toLowerCase() === "grab items") {
       response = console.log("\nYou grab the items and add them to your inventory.\n")
     } else if (response.toLowerCase() === "go up stairs") {
       response = console.log("\nYou walk up the stairs and enter a hallway with five doors numbered 1 through 5\n")
+      
       //..............................................................King's Landing
     } else if (response.toLowerCase() === "enter door 1") {
       response = console.log(`\nYou have entered the "King's Landing". A strange individial is sitting at a desk mumbling about a missing Seven Days\n`)
