@@ -9,14 +9,14 @@ function ask(questionText) {
 
 // remember the StateMachine lecture
 // https://bootcamp.burlingtoncodeacademy.com/lessons/cs/state-machines
-let states = {
-  'roomOne': { canChangeTo: ['roomTwo'] },
-  'roomTwo': { canChangeTo: ['roomThree'] },
-  'roomThree': { canChangeTo: ['roomOne'] }
-};
-
-let currentState = "green";
-
+//let states = {
+//  'roomOne': { canChangeTo: ['roomTwo'] },
+//  'roomTwo': { canChangeTo: ['roomThree'] },
+//  'roomThree': { canChangeTo: ['roomOne'] }
+//};
+//
+//let currentState = "green";
+//
 function enterState(newState) {
   let validTransitions = states[currentState].canChangeTo;
   if (validTransitions.includes(newState)) {
@@ -31,7 +31,12 @@ let playerObj = {
   'location': 'Outside Main St.',
   'inventory': ''
 }
+//.......................................................................State Machine
+let states = {
+'grab items': { canChangeTo: ['go up stairs']}
+}
 
+let currentState = 'grab items';
 //.......................................................................Room Template
 class Room {
   constructor(desc, inv, locked) {
@@ -101,8 +106,8 @@ async function start() {
       response = console.log(`\nDoor is locked. Where are the keys?\n`)
     } else if (response.toLowerCase() === "use keys") {
       response = console.log(`\nDoor unlocks, enter room\n`)
-    } else if (response.toLowerCase() === "A lion roars and you immediately close the door") {
-      response = console.log(`\n\n`)
+    } else if (response.toLowerCase() === "enter room") {
+      response = console.log(`\nA lion roars and you immediately close the door\n`)
     } else if (response.toLowerCase() === "exit room") {
       response = console.log("\nYou're in the hallway now\n")
       //................................................................Office Space
@@ -128,7 +133,7 @@ async function start() {
     } else if (response.toLowerCase() === "enter door 5") {
       response = console.log("\nIt's a room inside a room inside a room...if you want to exit I'll give you a hint.\n")
     } else if (response.toLowerCase() === "hint") {
-      response = console.log(`Reverse Text The Name of The Room You're In`)
+      response = console.log(`\nReverse Text The Name of The Room You're In\n`)
     } else if (response.toLowerCase() === "mooR epacsE") {
       response = console.log(`\nYou're in the hallway now\n`)
       //........................................................................Exit   
