@@ -16,7 +16,7 @@ function cap(word) {
 let playerObj = {
   'name': '',
   'location': 'Outside Main St.',
-  'inventory': ''
+  'inventory': []
 }
 ////.....................................................................State Machine
 /*We planned on using a state machine and might use it in the future if needed but excluded it in this version*/
@@ -73,15 +73,18 @@ start();
 //.....................................................................Welcome Message
 async function start() {
   playerObj.name = await ask("\nWhat is your name peasant?\n\n")
-  console.log("\n" + cap(playerObj.name) + ", Most people are so ungrateful to be alive but not you." +
-    "\nYou are standing outside 182 Main Street between Church and South Winooski." +
-    "\nThere is a door here. A keypad sits on the handle. On the door is a handwritten sign.")
-  playerObj.location = 'Outside Main St'
+  console.log(playerObj.name.toUpperCase() + ", Most people are so ungrateful to be alive but not you." +
+    "You are standing outside 182 Main Street between Church and South Winooski." +
+    "There is a door here. A keypad sits on the handle.  On the door is a handwritten sign. " +
+    "If you ever want to know your location, as well as what you have in your possession, just say 'check status'")
+    playerObj.location = 'Outside Main St'
+    playerObj.inventory = []
   while (response !== 'exit') {
     response = await ask('\n>_')
     if (noResponse.includes(response)) {
       console.log("Goodbye")
       process.exit()
+    //..........................................................EXIT STATEMENTS 
     //THIS BELOW IS FOR EXITING CHERRY GARCIA ROOM
     } else if (response.toLowerCase() === "exit room" && playerObj.location == 'cherry garcia room') {
       playerObj.location = 'Hallway'
@@ -105,9 +108,12 @@ async function start() {
         playerObj.location = 'In the Hallway'
         response = console.log(`\nYou're in the hallway now\n`)
         console.log(playerObj) //check
-    
-    } else if (yesResponse.includes(response)) {
+    //.................................................................................GAME STARTS HERE
+  
       //.......................................................Outside 182 Main Street
+    } else if (response === "check status") {
+      console.log(playerObj.name + ", you are in " + playerObj.location + ".\nYour inventory consists of the following items: " + playerObj.inventory + ".")
+
     } else if (response.toLowerCase() === "read sign") {
       response = console.log('\nThe sign says "Welcome to Burlington Code Academy!' +
         '\nCome on up to the third floor.' +
@@ -118,12 +124,14 @@ async function start() {
       response = console.log("\nThe door is locked. There is a keypad on the door handle.")
     } else if (response === "enter code 12345") {
       playerObj.location = 'In the Foyer'
-      response = console.log("\nYou are in a Foyer.\nAhead of you are a set of stairs and four items lay on a table \n(A set of keys,  a knife, Trident Gum, and an old Seven Days).\n")
+      response = console.log("\nYou are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys, a knife, a pint of Strawberry Cheesecake ice cream, and an old Seven Days).\n")
       console.log(playerObj)
       //check
       //............................................................Foyer.....Room One
     } else if (response.toLowerCase() === "grab items") {
+      playerObj.inventory.push('Keys', 'Knife', 'Ice Cream', 'Seven Days')
       response = console.log("\nYou grab the items and add them to your inventory.")
+      console.log(playerObj)
     } else if (response.toLowerCase() === "go up stairs") {
       playerObj.location = 'In the Hallway'
       response = console.log("\nYou walk up the stairs and enter a hallway with five doors numbered 1 through 5\n")
@@ -134,7 +142,9 @@ async function start() {
       response = console.log(`\nYou have entered the "King's Landing". A strange individial is sitting at a desk mumbling about a missing Seven Days\n`)
       console.log(playerObj) //check
     } else if (response.toLowerCase() === "give seven days") {
+      playerObj.inventory.splice(playerObj.inventory.indexOf('Seven Days'), 3)
       response = console.log('\nThe strange man looks into your eyes, flips you a coin and says "Keep the change you filthy animal"')
+      console.log(playerObj)
     } else if (response.toLowerCase() === "exit room") {
       playerObj.location = 'Hallway'
       response = console.log("\nYour're back in the hallway stairing at a 3D photo\n")
@@ -146,13 +156,12 @@ async function start() {
       console.log(playerObj) //check
     } else if (response.toLowerCase() === "put the ice cream in the freezer") {
       response = console.log(`\nYour Strawberry Cheese Cake ice cream will be safe in here, go to room 4 to get a spoon\n`)
-    } else if (response.toLowerCase() === "exit room" && playerObj.location == 'cherry garcia room') {
-      playerObj.location = 'Hallway'
-      response = console.log("\nYou're back in the hallway staring at the 3D photo again. A kid tugs your pants and says its a schooner." +
-        `You reply it's not a schooner...It's a Sailboat.  The little boy replies with "A schooner IS a sailboat stupid head!"\n`)
-      console.log(playerObj) //check  
-      //.........................................................Jumanji.....Room Four
-    } else if (response.toLowerCase() === "enter door 3") {
+    
+    //............................................."exit room" ===> EXIT CHERRY GARCIA (SEE EXIT CODE AT TOP OF WHILE LOOP)
+    //.........................................YOU ARE BACK IN HALLWAY
+    
+    } else if (response.toLowerCase() === "enter door 3") { 
+      //.....................................................................Jumanji 
       response = console.log(`\nDoor is locked. Where are the keys?\n`)
     } else if (response.toLowerCase() === "use keys") {
       response = console.log(`\nDoor unlocks, enter room`)
@@ -160,8 +169,9 @@ async function start() {
       playerObj.location = 'Jumanji'
       response = console.log(`\nA lion roars and you immediately close the door`)
       console.log(playerObj) //check
-    
-      //................................................................Office Space
+    //..............................................."exit room" ===> EXIT JUMANJI (SEE EXIT CODE AT TOP OF WHILE LOOP)
+    //............................................YOU ARE BACK IN HALLWAY
+      //................................................................Kitchen
     } else if (response.toLowerCase() === "enter door 4") {
       playerObj.location = 'Kitchen'
       response = console.log(`\nWelcome to the kitchen.\nLet me give you a tour.` + 
@@ -178,22 +188,22 @@ async function start() {
       response = console.log(`\nYou have found the GOLDEN SPOON, do you have anything to "TRADE" for it.`)
     } else if (response.toLowerCase() === "trade knife") {
       response = console.log(`\nIt's dangerous to go alone! Take This.  The GOLDEN SPOON has been added to your inventory list`)
-    } else if (response.toLowerCase() === "exit room") {
-      playerObj.location = 'In the Hallway'
-      response = console.log(`\nYou're in the hallway now\n`)
-      console.log(playerObj) //check
-      //......................................................Escape Room.....Room Six
+    
+
+    //..............................................."exit room" ===> EXIT KITCHEN (SEE EXIT CODE AT TOP OF WHILE LOOP)
+    //.........................................YOU ARE BACK IN HALLWAY
+    
+      //.................................................................Escape Room
     } else if (response.toLowerCase() === "enter door 5") {
       playerObj.location = 'Escape Room'
       response = console.log("\nIt's a room inside a room inside a room...if you want to exit I'll give you a hint.\n")
       console.log(playerObj) //check
     } else if (response.toLowerCase() === "hint") {
       response = console.log(`\nReverse Text The Name of The Room You're In`)
-    } else if (response.toLowerCase() === "mooR epacsE") {
 
-      response = console.log(`\nYou're in the hallway now\n`)
-      console.log(playerObj) //check
-      //..........................................................................Exit   
+    //..............................................."exit room" ===> EXIT ESCAPE ROOM (SEE EXIT CODE AT TOP OF WHILE LOOP)
+    
+      //........................................................................Exit   
     } else if (response.toLowerCase() === "end game") {
       console.log("\nIt’s understanding that makes it possible for people like us to tolerate a person like yourself.")
       process.exit()
@@ -205,7 +215,10 @@ async function start() {
 //CapsLock = when you type READ SIGN => I don't recognize that command => We need to do a toLowerCase (Finished)
 //Need to not be able to walk up stairs in Foyer until items are picked up
 //Need to put a True/False statement on door 3 to enter.  The door is locked but you are able to enter it.
-//Need to make every "exit room", specific to its room.  When you type in "exit room", it loops back and always states "You're back in the hallway staring at a 3D photo"
-//
+//Need to make every "exit room", specific to its room.  When you type in "exit room", it loops back and always states "You're back in the hallway staring at a 3D photo" (Finshed)
+//Need to reorganize/rename a lot of things
+//Need to have an end?
+//Want to drop/pick items in certain rooms
+//Want to use room objects to use boolean value for "locked/unlocked" property
 
 //sanitize inputs (door code)
