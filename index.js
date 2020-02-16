@@ -116,7 +116,7 @@ async function start() {
       response = console.log("\nThe door is locked. There is a keypad on the door handle.")
     } else if (response === "enter code 12345") {
       playerObj.location = 'In the Foyer'
-      response = console.log("\nYou are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, a pint of Strawberry Cheesecake ice cream, and an old Seven Days).\n")
+      response = console.log("\nYou are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys, a knife, a pint of Strawberry Cheesecake ice cream, and an old Seven Days).\n")
       console.log(playerObj)
       //check
       //.......................................................................Foyer.....Room One
@@ -208,8 +208,10 @@ async function start() {
 //CapsLock = when you type READ SIGN => I don't recognize that command => We need to do a toLowerCase (Finished)
 //Need to not be able to walk up stairs in Foyer until items are picked up
 //Need to put a True/False statement on door 3 to enter.  The door is locked but you are able to enter it.
-//Need to make every "exit room", specific to its room.  When you type in "exit room", it loops back and always states "You're back in the hallway staring at a 3D photo"
+//Need to make every "exit room", specific to its room.  When you type in "exit room", it loops back and always states "You're back in the hallway staring at a 3D photo" (Finshed)
 //Need to reorganize/rename a lot of things
 //Need to have an end?
+//Want to drop/pick items in certain rooms
+//Want to use room objects to use boolean value for "locked/unlocked" property
 
 //sanitize inputs (door code)
