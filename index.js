@@ -10,7 +10,7 @@ function ask(questionText) {
 let playerObj = {
   'name': '',
   'location': 'Outside Main St.',
-  'inventory': ''
+  'inventory': []
 }
 //.......................................................................State Machine
 //let rooms = {
@@ -67,8 +67,10 @@ async function start() {
   playerObj.name = await ask("\nWhat is your name peasant?\n\n")
   console.log(playerObj.name.toUpperCase() + ", Most people are so ungrateful to be alive but not you." +
     "You are standing outside 182 Main Street between Church and South Winooski." +
-    "There is a door here. A keypad sits on the handle.  On the door is a handwritten sign.")
+    "There is a door here. A keypad sits on the handle.  On the door is a handwritten sign. " +
+    "If you ever want to know your location, as well as what you have in your possession, just say 'check status'")
     playerObj.location = 'Outside Main St'
+    playerObj.inventory = []
   while (response !== 'exit') {
     response = await ask('\n>_')
     if (noResponse.includes(response)) {
@@ -101,6 +103,9 @@ async function start() {
     //.................................................................................GAME STARTS HERE
   
       //.......................................................Outside 182 Main Street
+    } else if (response === "check status") {
+      console.log(playerObj.name + ", you are in " + playerObj.location + ".\nYour inventory consists of the following items: " + playerObj.inventory + ".")
+
     } else if (response.toLowerCase() === "read sign") {
       response = console.log('\nThe sign says "Welcome to Burlington Code Academy!' +
         'Come on up to the third floor.' +
@@ -111,12 +116,14 @@ async function start() {
       response = console.log("\nThe door is locked. There is a keypad on the door handle.")
     } else if (response === "enter code 12345") {
       playerObj.location = 'In the Foyer'
-      response = console.log("\nYou are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, Trident Gum, and an old Seven Days).\n")
+      response = console.log("\nYou are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys,  a knife, a pint of Strawberry Cheesecake ice cream, and an old Seven Days).\n")
       console.log(playerObj)
       //check
       //.......................................................................Foyer.....Room One
     } else if (response.toLowerCase() === "grab items") {
+      playerObj.inventory.push('Keys', 'Knife', 'Ice Cream', 'Seven Days')
       response = console.log("\nYou grab the items and add them to your inventory.")
+      console.log(playerObj)
     } else if (response.toLowerCase() === "go up stairs") {
       playerObj.location = 'In the Hallway'
       response = console.log("\nYou walk up the stairs and enter a hallway with five doors numbered 1 through 5\n")
@@ -128,7 +135,9 @@ async function start() {
       response = console.log(`\nYou have entered the "King's Landing". A strange individial is sitting at a desk mumbling about a missing Seven Days\n`)
       console.log(playerObj) //check
     } else if (response.toLowerCase() === "give seven days") {
+      playerObj.inventory.splice(playerObj.inventory.indexOf('Seven Days'), 3)
       response = console.log('\nThe strange man looks into your eyes, flips you a coin and says "Keep the change you filthy animal"')
+      console.log(playerObj)
     } else if (response.toLowerCase() === "exit room") {
       playerObj.location = 'Hallway'
       response = console.log("\nYour're back in the hallway stairing at a 3D photo\n")
