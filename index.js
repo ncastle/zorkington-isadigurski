@@ -73,12 +73,9 @@ start();
 //.....................................................................Welcome Message
 async function start() {
   playerObj.name = await ask("\nWhat is your name peasant?\n\n")
-  console.log(playerObj.name.toUpperCase() + ", Most people are so ungrateful to be alive but not you." +
-    "You are standing outside 182 Main Street between Church and South Winooski." +
-    "There is a door here. A keypad sits on the handle.  On the door is a handwritten sign. " +
-    "If you ever want to know your location, as well as what you have in your possession, just say 'check status'")
+  console.log(`\n` + playerObj.name.toUpperCase() + `, Most people are so ungrateful to be alive but not you. You are standing outside 182 Main Street between Church and South Winooski. There is a door here. A keypad sits on the handle.  On the door is a handwritten sign. If you ever want to know your location, as well as what you have in your possession, just say 'check status'`)
   playerObj.location = 'outside 182 Main St'
-  playerObj.hunger_level = ''
+  playerObj.hunger_level = 'Mild'
   playerObj.inventory = []
   playerObj.been_to = []
 
@@ -89,25 +86,25 @@ async function start() {
     //THIS BELOW IS FOR EXITING CHERRY GARCIA ROOM
     if (response.toLowerCase() === "exit room" && playerObj.location == 'in the Cherry Garcia room') {
       playerObj.location = 'in the Hallway'
-      console.log("\nYou're back in the hallway staring at the 3D photo again. A kid tugs your pants and says its a schooner." +
-        `You reply it's not a schooner...It's a Sailboat.  The little boy replies with "A schooner IS a sailboat stupid head!"\n`)
+      console.log(`\nYou're in the hallway now.\n`)
 
       //THIS BELOW IS FOR EXITING JUMANJI
     } else if (response.toLowerCase() === "exit room" && playerObj.location == 'in Jumanji') {
       playerObj.location = 'in the Hallway'
-      console.log("\nYou're in the hallway now\n")
+      console.log("\nYou're in the hallway now.\n")
 
 
       //THIS BELOW IS FOR EXITING THE KITCHEN/OFFICE SPACE  
     } else if (response.toLowerCase() === "exit room" && playerObj.location == 'in the Kitchen') {
       playerObj.location = 'in the Hallway'
-      console.log(`\nYou are in the hallway now!\n`)
+      console.log(`\nYou're back in the hallway staring at the 3D photo again. A kid tugs your pants and says its a schooner. You reply it's not a schooner...It's a Sailboat.  The little boy replies with "A schooner IS a sailboat stupid head!"\n`)
 
 
       //THIS IS FOR EXITING THE ESCAPE ROOM
     } else if (response === "mooR epacsE" && playerObj.location == 'in Escape Room') {
       
       console.log(`\nGame Over! Go home!\n`)
+      process.exit()
 
       //.................................................................................GAME STARTS HERE
 
@@ -150,7 +147,7 @@ async function start() {
       playerObj.hunger_level = 'Moderate'
       playerObj.location = 'in the Cherry Garcia room'
       playerObj.been_to.push(2)
-      console.log(`\nThere is a freezer in the middle of the room. You should "put the ice cream in the freezer"?\n`)
+      console.log(`\nThere is a freezer in the middle of the room. You should "put the ice cream in the freezer".\n`)
     } else if (response.toLowerCase() === "put the ice cream in the freezer" && playerObj.inventory.includes('Ice Cream')) {
       playerObj.inventory.splice(playerObj.inventory.indexOf('Ice Cream'), 2)
       console.log(`\nYour Strawberry Cheese Cake ice cream will be safe in here. You need to find a spoon in one of the next rooms!\n`)
@@ -197,6 +194,7 @@ async function start() {
     } else if (response.toLowerCase() === 'take out the ice cream') {
       console.log("Okay, now eat it before you die!")
     } else if (response.toLowerCase() === 'eat ice cream' && playerObj.inventory.includes('Spoon')) {
+      playerObj.hunger_level = 'Fulfilled'
       console.log("Your hunger has been fulfilled! Exit room, and then enter the 5th and final door!")
       //..............................................."exit room" ===> EXIT KITCHEN (SEE EXIT CODE AT TOP OF WHILE LOOP)
       //.........................................YOU ARE BACK IN HALLWAY
