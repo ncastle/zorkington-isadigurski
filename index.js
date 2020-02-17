@@ -83,8 +83,13 @@ async function start() {
     response = await ask('\n>_')
 
     //..........................................................EXIT STATEMENTS 
+    //THIS BELOW IS FOR EXITING King's Landing
+    if (response.toLowerCase() === "exit room" && playerObj.location == 'in Kings Landing') {
+      playerObj.location = 'in the Hallway'
+      console.log("\nYou're back in the hallway stairing at a 3D photo\n")
+      
     //THIS BELOW IS FOR EXITING CHERRY GARCIA ROOM
-    if (response.toLowerCase() === "exit room" && playerObj.location == 'in the Cherry Garcia room') {
+    } else if (response.toLowerCase() === "exit room" && playerObj.location == 'in the Cherry Garcia room') {
       playerObj.location = 'in the Hallway'
       console.log(`\nYou're in the hallway now.\n`)
 
@@ -102,7 +107,7 @@ async function start() {
 
       //THIS IS FOR EXITING THE ESCAPE ROOM
     } else if (response === "mooR epacsE" && playerObj.location == 'in Escape Room') {
-      
+
       console.log(`\nGame Over! Go home!\n`)
       process.exit()
 
@@ -123,14 +128,18 @@ async function start() {
     } else if (response === "enter code 12345") {
       playerObj.location = 'In the Foyer'
       console.log("\nYou are in a Foyer. Ahead of you are a set of stairs and four items lay on a table (A set of keys, a grenade, a pint of Strawberry Cheesecake ice cream, and an old Seven Days). You will need all these things, so please 'grab items'\n")
-      //............................................................Foyer.....Room One
+
+      //............................................................Foyer.....
+
     } else if (response.toLowerCase() === "grab items" && playerObj.location == 'In the Foyer') {
       playerObj.inventory.push('Keys', 'Grenade', 'Ice Cream', 'Seven Days')
       console.log("\nYou grab the items and add them to your inventory.")
     } else if (response.toLowerCase() === "go up stairs") {
       playerObj.location = 'in the Hallway'
       console.log("\nYou walk up the stairs and enter a hallway with five doors numbered 1 through 5.\n")
-      //...................................................King's Landing.....Room Two
+
+      //...................................................King's Landing.....Door 1
+
     } else if (response.toLowerCase() === "enter door 1") {
       playerObj.hunger_level = 'Mild'
       playerObj.location = 'in Kings Landing'
@@ -139,10 +148,9 @@ async function start() {
     } else if (response.toLowerCase() === "give seven days" && playerObj.inventory.includes('Seven Days')) {
       playerObj.inventory.splice(playerObj.inventory.indexOf('Seven Days'), 3)
       console.log('\nThe strange man looks into your eyes, flips you a coin and says "Keep the change you filthy animal"')
-    } else if (response.toLowerCase() === "exit room") {
-      playerObj.location = 'in the Hallway'
-      console.log("\nYou're back in the hallway stairing at a 3D photo\n")
-      //..................................................Cherry Garcia.....Room Three
+
+      //..................................................Cherry Garcia.....Door 2
+
     } else if (response.toLowerCase() === "enter door 2" && playerObj.been_to.includes(1)) {
       playerObj.hunger_level = 'Moderate'
       playerObj.location = 'in the Cherry Garcia room'
@@ -152,9 +160,11 @@ async function start() {
       playerObj.inventory.splice(playerObj.inventory.indexOf('Ice Cream'), 2)
       console.log(`\nYour Strawberry Cheese Cake ice cream will be safe in here. You need to find a spoon in one of the next rooms!\n`)
       //............................................."exit room" ===> EXIT CHERRY GARCIA (SEE EXIT CODE AT TOP OF WHILE LOOP)
+
       //.........................................YOU ARE BACK IN HALLWAY
+
     } else if (response.toLowerCase() === "enter door 3" && playerObj.been_to.includes(2)) {
-      //.....................................................................Jumanji 
+      //.....................................................................Jumanji.....Door 3
       console.log(`\nDoor is locked. Where are the keys?\n`)
     } else if (response.toLowerCase() === "use keys") {
       console.log(`\nDoor unlocks, enter room`)
@@ -167,8 +177,10 @@ async function start() {
       playerObj.inventory.splice(playerObj.inventory.indexOf('Grenade'), 1)
       console.log(`\nGrenade is dropped! Now exit room!!`)
       //..............................................."exit room" ===> EXIT JUMANJI (SEE EXIT CODE AT TOP OF WHILE LOOP)
+
       //............................................YOU ARE BACK IN HALLWAY
-      //................................................................Kitchen
+
+      //................................................................Kitchen.......Door 4
     } else if (response.toLowerCase() === "enter door 4" && playerObj.been_to.includes(3)) {
       playerObj.hunger_level = 'Critical'
       playerObj.been_to.push(4)
@@ -197,16 +209,20 @@ async function start() {
       playerObj.hunger_level = 'Fulfilled'
       console.log("Your hunger has been fulfilled! Exit room, and then enter the 5th and final door!")
       //..............................................."exit room" ===> EXIT KITCHEN (SEE EXIT CODE AT TOP OF WHILE LOOP)
+
       //.........................................YOU ARE BACK IN HALLWAY
 
-      //.................................................................Escape Room
+      //.................................................................Escape Room.......Door 5
     } else if (response.toLowerCase() === "enter door 5" && playerObj.been_to.includes(4)) {
       playerObj.location = 'in Escape Room'
       playerObj.been_to.push(5)
       console.log("\nIt's a room inside a room inside a room...if you want to exit I'll give you a hint.\n")
     } else if (response.toLowerCase() === "hint") {
       console.log(`\nReverse Text The Name of The Room You're In`)
+
       //..............................................."exit room" ===> EXIT ESCAPE ROOM (SEE EXIT CODE AT TOP OF WHILE LOOP)
+
+
     } else if (response.toLowerCase() === 'eat ice cream') {
       console.log("You can't eat ice cream")
       //........................................................................Exit   
