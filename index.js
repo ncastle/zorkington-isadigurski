@@ -1,3 +1,9 @@
+/** Good start to what will be a good working game and a cool story line! One big thing to remember is to remove unused code like functions that you
+ *  don't use and comments before submitting your project. Good comments for sectioning out code, but maybe a few more intermediate comments would be good.
+ *  The long if-else chains are a little hard to read, so some spacing might be a good improvement for readability. Your game works with a specific set of
+ *  commands and in a specific order, which completes the stories, but maybe you could try to add a little bit of flexibility to where you go and when.
+ *  You have the right idea when picking up items and giving them to the right person/place. Maybe you can try to implement a way that you can pick up
+ *  specific items from a room and be able to drop an item in any other room. **/
 const readline = require('readline');
 const readlineInterface = readline.createInterface(process.stdin, process.stdout);
 
@@ -20,6 +26,7 @@ let playerObj = {
   'hunger_level': '',
   'been_to': []
 }
+/** Remember to remove all of this commented code for submissions, you can always save it to another file or look back at an old commit. **/
 ////.....................................................................State Machine
 /*We planned on using a state machine and might use it in the future if needed but excluded it in this version*/
 //let rooms = {
@@ -82,12 +89,12 @@ async function start() {
   while (response !== 'exit') {
     response = await ask('\n>_')
 
-    //..........................................................EXIT STATEMENTS 
+    //..........................................................EXIT STATEMENTS
     //THIS BELOW IS FOR EXITING King's Landing
     if (response.toLowerCase() === "exit room" && playerObj.location == 'in Kings Landing') {
       playerObj.location = 'in the Hallway'
       console.log("\nYou're back in the hallway stairing at a 3D photo\n")
-      
+
     //THIS BELOW IS FOR EXITING CHERRY GARCIA ROOM
     } else if (response.toLowerCase() === "exit room" && playerObj.location == 'in the Cherry Garcia room') {
       playerObj.location = 'in the Hallway'
@@ -99,7 +106,7 @@ async function start() {
       console.log("\nYou're in the hallway now.\n")
 
 
-      //THIS BELOW IS FOR EXITING THE KITCHEN/OFFICE SPACE  
+      //THIS BELOW IS FOR EXITING THE KITCHEN/OFFICE SPACE
     } else if (response.toLowerCase() === "exit room" && playerObj.location == 'in the Kitchen') {
       playerObj.location = 'in the Hallway'
       console.log(`\nYou're back in the hallway staring at the 3D photo again. A kid tugs your pants and says its a schooner. You reply it's not a schooner...It's a Sailboat.  The little boy replies with "A schooner IS a sailboat stupid head!"\n`)
@@ -112,6 +119,7 @@ async function start() {
       process.exit()
 
       //.................................................................................GAME STARTS HERE
+      /** Good use of comments to section out your code **/
 
       //.......................................................Outside 182 Main Street
     } else if (response === "check status") {
@@ -225,7 +233,7 @@ async function start() {
 
     } else if (response.toLowerCase() === 'eat ice cream') {
       console.log("You can't eat ice cream")
-      //........................................................................Exit   
+      //........................................................................Exit
     } else if (response.toLowerCase() === "end game") {
       console.log("\nIt’s understanding that makes it possible for people like us to tolerate a person like yourself.")
       process.exit()
@@ -234,6 +242,9 @@ async function start() {
     }
   }
 }
+
+/** Nice use of comments to keep track of what you have and haven't done. Remember to pull these out for your submission for better readability and
+    organization. Maybe you can keep a TODO.txt file to keep these in. Then you can add that file to your .gitignore so that it is not tracked by git **/
 //CapsLock = when you type READ SIGN => I don't recognize that command => We need to do a toLowerCase (Finished)
 //Need to not be able to walk up stairs in Foyer until items are picked up
 //Need to put a True/False statement on door 3 to enter.  The door is locked but you are able to enter it.
